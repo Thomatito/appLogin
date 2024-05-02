@@ -12,39 +12,25 @@ export default function RegisterScreen({ navigation }) {
   const [cep, setCep] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
-  const [errorEmail, setErrorEmail] = useState("");
-
+  const [erro, setErro] = useState("");
+  // Nome, Email, Senha, Repetir Senha
+  // Endereço: Logradouro, CEP, Cidade, Estado
+  // O que é LOGRADOURO? É um termo que designa um terreno ou um espaço anexo a uma habitação, usado para serventia da casa, ou ainda qualquer espaço público comum que pode ser usufruído por toda a população e reconhecido pela administração de um município, como largos, praças, ruas, jardins, parques, entre outros.
 
   function realizaRegistro() {
     console.log("Fazer Registro");
-
-
-    let dados = {
-      nome : nome,
-      senha : senha,
-      cep : cep,
-      logradouro : logradouro,
-      estado : estado,
-
-    }
-      if(dados == 1){
-        navigation.navigate('Menu')
-      } console.log("erro!")
     // o que precisa ser feito?
     // 1) Validar se todos os campos foram digitados
     // 2) Validar se as senhas são iguais
     // 3) Enviar os dados para a API do Firestore junto ao Firebase Auth
     // 4) Tratar os erros
-    // 5) Redirecionar para a tela de Logi
-
-
+    // 5) Redirecionar para a tela de Login
   }
-
-  
 
   function buscaCEP() {
     console.log("Busca CEP");
     let cepLimpo = cep.replace("-", "").trim();
+    if (cepLimpo.length < 8) return;
     fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
       .then((res) => res.json()) // obrigatório em requisições fetch json
       .then((dados) => {
@@ -60,9 +46,6 @@ export default function RegisterScreen({ navigation }) {
         setErro("CEP não encontrado");
       });
   }
- 
-
-  
 
   return (
     <View style={styles.container}>
@@ -79,8 +62,6 @@ export default function RegisterScreen({ navigation }) {
           value={email}
           onChangeText={setEmail}
           style={styles.input}
-          keyboardType="email-address"
-          errorMessage={errorEmail}
         />
         <TextInput
           placeholder="Digite sua senha"
@@ -103,13 +84,13 @@ export default function RegisterScreen({ navigation }) {
         >
           <Text variant="headlineSmall">Dados pessoais</Text>
           <TextInput
-            placeholder="Digite seu CEP"
+            placeholder="Digite seu CEP (somente números)"
             value={cep}
             onChangeText={setCep}
             onBlur={buscaCEP} // quando o campo perde o foco, busca o CEP
-            // only numeric keyboard
-            keyboardType="numeric"
+            keyboardType="numeric" // abre o teclado numérico no celular
             style={styles.input}
+            maxLength={8} // máximo de 8 caracteres
           />
           <TextInput
             placeholder="Logradouro"
@@ -117,23 +98,37 @@ export default function RegisterScreen({ navigation }) {
             onChangeText={setLogradouro}
             style={styles.input}
           />
-          <TextInput
-            placeholder="Cidade"
-            value={cidade}
-            onChangeText={setCidade}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Estado"
-            value={estado}
-            onChangeText={setEstado}
-            style={styles.input}
-          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <TextInput
+              placeholder="Cidade"
+              value={cidade}
+              onChangeText={setCidade}
+              style={{
+                ...styles.input, // utilização do spread operator ou operador de propagação
+                width: "70%",
+              }}
+            />
+            <TextInput
+              placeholder="Estado"
+              value={estado}
+              onChangeText={setEstado}
+              style={{
+                ...styles.input,
+                width: "30%",
+              }}
+              maxLength={2} // máximo de 2 caracteres
+            />
+          </View>
         </View>
         <Button onPress={realizaRegistro} mode="outlined">
           Registrar
         </Button>
-        <Button onPress={() => navigation.navigate("Login")}>
+        <Button onPress={() => navigation.navigate("LoginScreen")}>
           Voltar ao login
         </Button>
       </View>
