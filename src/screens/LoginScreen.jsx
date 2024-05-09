@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { View } from "react-native";
-import { Button, Surface, Text, TextInput } from "react-native-paper";
+import { Button, Surface, Text, TextInput, Animated } from "react-native-paper";
 import { styles } from "../config/styles";
+import * as Animatable from 'react-native-animatable';
+
+
 
 export default function LoginScreen({ navigation }) {
+  
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState({
@@ -26,8 +30,11 @@ export default function LoginScreen({ navigation }) {
   }
 
   return (
+    
     <Surface style={styles.container}>
       <View style={styles.innerContainer}>
+  
+          
         <Text
           variant="headlineMedium"
           style={{
@@ -37,13 +44,18 @@ export default function LoginScreen({ navigation }) {
         >
           Faça seu Login
         </Text>
+      
+        
         <TextInput
           placeholder="Digite seu e-mail"
           onChangeText={setEmail}
           value={email}
           style={styles.input}
           error={erro.email}
+          
+          
         />
+      
         <TextInput
           placeholder="Digite sua senha"
           onChangeText={setSenha}
@@ -60,6 +72,7 @@ export default function LoginScreen({ navigation }) {
         <Button onPress={() => navigation.navigate("RegisterScreen")}>
           Faça seu cadastro
         </Button>
+    
       </View>
     </Surface>
   );
