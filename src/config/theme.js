@@ -9,7 +9,7 @@ import { MD3DarkTheme, MD3LightTheme } from "react-native-paper";
 export const themeLight = {
   ...MD3LightTheme,
   colors: {
-    primary: "rgb(0, 95, 175)",
+    primary: "rgb(117, 25, 255)",
     onPrimary: "rgb(255, 255, 255)",
     primaryContainer: "rgb(212, 227, 255)",
     onPrimaryContainer: "rgb(0, 28, 58)",
@@ -55,7 +55,7 @@ export const themeLight = {
 export const themeDark = {
   ...MD3DarkTheme,
   colors: {
-    primary: "rgb(165, 200, 255)",
+    primary: "rgb(147, 76, 255)",
     onPrimary: "rgb(0, 49, 95)",
     primaryContainer: "rgb(0, 71, 134)",
     onPrimaryContainer: "rgb(212, 227, 255)",
