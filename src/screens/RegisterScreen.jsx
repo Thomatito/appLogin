@@ -106,8 +106,14 @@ export default function RegisterScreen({ navigation }) {
       }
       );
 
+      navigation.navigate("LoginScreen");
     } catch (error) {
-      console.error(error);
+      if (error.code === "auth/email-already-in-use") {
+        setErrorMessage("Email já está cadastrado.");
+      } else {
+        setErrorMessage("Erro ao cadastrar usuário: " + error.message);
+      }
+      showModal();
     }
   }
 
@@ -118,7 +124,7 @@ export default function RegisterScreen({ navigation }) {
     fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
       .then((res) => res.json()) // obrigatório em requisições fetch json
       .then((dados) => {
-        // agora sim vou tratar os dados
+     
         console.log(dados);
         setLogradouro(dados.logradouro);
         setCidade(dados.localidade);
